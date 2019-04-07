@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <!--skip-->
+        <title>EasyRTC Demo: Simple Video+Audio</title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="../easyrtc/easyrtc.css" /> -->
+
+        <script type="text/javascript" src="js/prettify/loadAndFilter.js"></script>
+        <script type="text/javascript" src="js/prettify/jquery.min.js"></script>
+
+        <!--show-->
+        <!-- Assumes global locations for socket.io.js and easyrtc.js -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="../easyrtc/easyrtc.js"></script>
+        <script type="text/javascript" src="../easyrtc/labs/easyrtc_recorder.js"></script>
+        <script type="text/javascript" src="js/demo_recording.js"></script>
+<style>
+.hide{
+    display: none;
+}
+</style>
+    </head>
+    <body onload="connect();"  class="bg-primary">
+        <!--hide-->
+        <div class="hero hero-sm bg-primary">
+                <div class="hero-body">
+                  <h1>Welcome to Visually Interactive Screen</h1>
+                  <p>You will be able to view and connect with Customer from here</p>
+                </div>
+              </div>
+        <div id="container" class="container">
+           
+            <div id="main">
+                
+                <!--show-->
+                <div id="demoContainer">
+                        <div class="columns">
+                                <div class="column col-4">
+                                <div class="empty">
+                                        <div class="empty-icon">
+                                          <i class="icon icon-photo icon-4x"></i>
+                                        </div>
+                                        <p class="empty-title h5"><div id="iam">Not yet connected...</div></p>
+                                        <div class="empty-action">
+                                                <div id="connectControls">
+                                                        
+                                                        <hr>
+                                                        Connect to:
+                    
+                                                        <div id="otherClients" >
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+
+                                                    <!-- <div id="recordButtons">
+                                                            <label for="useVP8">
+                                                                <input type="radio" onclick="easyrtc.setRecordingVideoCodec('vp8');" checked="checked" id="useVP8" name="codecUsed" disabled="disabled" > VP8 
+                                                            </label>
+                                                            <label for="codecUsed">
+                                                                <input type="radio" onclick="easyrtc.setRecordingVideoCodec('vp9');" id="useVP9" name="codecUsed" disabled="disabled" > VP9
+                                                            </label>
+                                                            <label for="useH264">
+                                                                <input type="radio" onclick="easyrtc.setRecordingVideoCodec('h264');" id="useH264" name="codecUsed" disabled="disabled"> H264
+                                                            </label>
+                                                            <br>
+                                                            <button id="startRecording" disabled="disabled" onclick="startRecording();" >Start recording</button> 
+                                                            <button id="stopRecording" disabled="disabled" onclick="endRecording();" >End/finish recording</button> 
+                                                           <br>
+                                                           download links for videos: self:<a id="selfDownloadLink"></a>
+                                                            &nbsp;&nbsp;caller:<a id="callerDownloadLink"></a>
+                                                        </div> -->
+
+                                        </div>
+                                      </div>
+                        </div>
+                        <div class="column col-8" id="videos">
+                        <div class="columns">
+                                <div class="column col-6">
+                                        <div class="card p-2">
+                                                <div class="card-header">
+                                                  <div class="card-title h5 label">Agent</div>
+                                                  <div class="card-subtitle text-gray">Teleperformance</div>
+                                                </div>
+                                                <div class="card-image">
+                                        <video autoplay="autoplay" playsinline="playsinline" class="easyrtcMirror  video-responsive video-responsive-4-3" id="selfVideo" muted="muted" volume="0" ></video>
+                                                  </div>
+                                                <div class="card-body">
+                                                    <!-- To make a contribution to the world by making tools for the mind that advance humankind. -->
+                                                  </div>
+                                                </div>
+                                    </div>
+                                    <div class="column col-6">
+                                            <div class="card p-2">
+                                                    <div class="card-header">
+                                                      <div class="card-title h5 label">Customer</div>
+                                                      <div class="card-subtitle text-gray">Uber</div>
+                                                    </div>
+                                                    <div class="card-image">
+                                            <video autoplay="autoplay" playsinline="playsinline" id="callerVideo" class="video-responsive video-responsive-4-3"></video>
+                                                      </div>
+                                                    <div class="card-body">
+                                                            <div id="recordButtons" class="">
+                                                                    <label for="useVP8" style="visibility: hidden;">
+                                                                        <input type="radio" onclick="easyrtc.setRecordingVideoCodec('vp8');" checked="checked" id="useVP8" name="codecUsed" disabled="disabled" > VP8 
+                                                                    </label>
+                                                                    <label for="codecUsed" style="visibility: hidden;">
+                                                                        <input type="radio" onclick="easyrtc.setRecordingVideoCodec('vp9');" id="useVP9" name="codecUsed" disabled="disabled" > VP9
+                                                                    </label>
+                                                                    <label for="useH264" style="visibility: hidden;">
+                                                                        <input type="radio" onclick="easyrtc.setRecordingVideoCodec('h264');" id="useH264" name="codecUsed" disabled="disabled"> H264
+                                                                    </label>
+                                                                    <br>
+                                                                    <button id="startRecording" disabled="disabled" onclick="startRecording();" >Start recording</button> 
+                                                                    <button id="stopRecording" disabled="disabled" onclick="endRecording();" >End/finish recording</button> 
+                                                                   <br>
+                                                                   download links for videos: self:<a id="selfDownloadLink"></a>
+                                                                    &nbsp;&nbsp;caller:<a id="callerDownloadLink"></a>
+                                                                </div>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- End Main Content -->
+            </div>
+
+        </div>
+        <!--show-->
+    </body>
+</html>

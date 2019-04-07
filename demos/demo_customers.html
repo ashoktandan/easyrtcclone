@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VideoRTC - Teleperformance</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function forward(){ window.location = "./demos/";}
+        function sendsms(){
+         
+          var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "/sendsms",
+  "method": "POST",
+  "headers": {
+    "authorization": "KiQ3ZX2IkyY18w0N4WufFp6rBzqhTmvED9GxRsHebMV5nolAJLMidkyIf94tjsZ7bB6wzXrGTQClgU3D",
+  },
+  "data": {
+    "sender_id": "FSTSMS",
+    "message": "This is a test message",
+    "language": "english",
+    "route": "p",
+    "numbers": "8802985527",
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+  $('#modalmessage').removeClass('hide')
+  $('#modalmessagehref')[0].click()
+  setTimeout(() => {
+    location.assign('/demos/demo_audio_video_simple.html')
+  }, 3000);
+});
+
+        }
+    </script>
+<style>
+  .hide{
+    display: none;
+  }
+.card{
+    margin-bottom: 1rem;
+    border: 0;
+    box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+}
+</style>
+</head>
+<body>
+
+        <!-- <div class="container column">
+                <div class="hero hero-sm bg-dark">
+                  <div class="hero-body">
+                    <h1>Video RTC</h1>
+                    <p>Helps Agents visualize customer problem</p>
+                  </div>
+                </div> -->
+
+
+    
+       
+
+   
+                        <div class="hero">
+                          <div class="hero-body">
+                                <div class="container">
+
+                                        <div class="docs-demo columns">
+                                                <div class="column col-12">
+                                                  <div class="filter">
+                                                    <input class="filter-tag" id="tag-0" type="radio" name="filter-radio" hidden="" checked="">
+                                                    <input class="filter-tag" id="tag-1" type="radio" name="filter-radio" hidden="">
+                                                    <input class="filter-tag" id="tag-2" type="radio" name="filter-radio" hidden="">
+                                                    <input class="filter-tag" id="tag-3" type="radio" name="filter-radio" hidden="">
+                                                    <input class="filter-tag" id="tag-4" type="radio" name="filter-radio" hidden="">
+                                                    <div class="filter-nav">
+                                                      <label class="" for="tag-0"><h3>Please send SMS to customer whomever you want to connect with visually.</h3></label>
+                                                    </div>
+                                                    <div class="filter-body columns">
+                                                        <div class="column col-4 filter-item" data-tag="tag-3">
+                                                            <div class="card">
+                                                              <div class="card-header">
+                                                                  <div class="tile">
+                                                                      <div class="tile-icon">
+                                                                        <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
+                                                                      </div>
+                                                                      <div class="tile-content">
+                                                                        <p class="tile-title text-bold">Customer 1</p>
+                                                                        <p class="tile-subtitle">This is Customers detail.Click send sms to furthur process.That were too big for any one hero to tackle...</p>
+                                                                      </div>
+                                                                    </div>
+    
+                                                                <div class="card-title text-bold"><button class="btn" onclick="sendsms()">Send SMS</button></div>
+                                                                <!-- <div class="card-subtitle text-gray">Shooter</div> -->
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                      <div class="column col-4 filter-item" data-tag="tag-3">
+                                                        <div class="card">
+                                                          <div class="card-header">
+                                                              <div class="tile">
+                                                                  <div class="tile-icon">
+                                                                    <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
+                                                                  </div>
+                                                                  <div class="tile-content">
+                                                                    <p class="tile-title text-bold">Thor Odinson</p>
+                                                                    <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
+                                                                  </div>
+                                                                </div>
+
+                                                                <div class="card-title text-bold"><button class="btn">Send SMS</button></div>
+                                                            <!-- <div class="card-subtitle text-gray">Shooter</div> -->
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      <div class="column col-4 filter-item" data-tag="tag-3">
+                                                          <div class="card">
+                                                            <div class="card-header">
+                                                                <div class="tile">
+                                                                    <div class="tile-icon">
+                                                                      <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
+                                                                    </div>
+                                                                    <div class="tile-content">
+                                                                      <p class="tile-title text-bold">Thor Odinson</p>
+                                                                      <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
+                                                                    </div>
+                                                                  </div>
+  
+                                                                <div class="card-title text-bold"><button class="btn">Send SMS</button></div>
+                                                              <!-- <div class="card-subtitle text-gray">Shooter</div> -->
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <div class="column col-4 filter-item" data-tag="tag-3">
+                                                            <div class="card">
+                                                              <div class="card-header">
+                                                                  <div class="tile">
+                                                                      <div class="tile-icon">
+                                                                        <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
+                                                                      </div>
+                                                                      <div class="tile-content">
+                                                                        <p class="tile-title text-bold">Thor Odinson</p>
+                                                                        <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
+                                                                      </div>
+                                                                    </div>
+    
+                                                                <div class="card-title text-bold"><button class="btn">Send SMS</button></div>
+                                                                <!-- <div class="card-subtitle text-gray">Shooter</div> -->
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                     
+                                                      
+                                                      
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                           </div>
+                            <!-- <p>This is a hero example</p> -->
+                          </div>
+                        </div>
+
+                        <div class="column col-6 col-xs-12 hide" id="modalmessage">
+                          <a class="btn btn-primary" href="#example-modal-2" id="modalmessagehref">Open small size Modal</a>
+                          <div class="modal modal-sm" id="example-modal-2"><a class="modal-overlay" href="#modals-sizes" aria-label="Close"></a>
+                            <div class="modal-container" role="document">
+                              <div class="modal-header"><a class="btn btn-clear float-right" href="#modals-sizes" aria-label="Close"></a>
+                                <div class="modal-title h5">Redirecting...</div>
+                              </div>
+                              <div class="modal-body">
+                                <div class="content">
+                                    <div class="loading loading-lg"></div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <label class="label label-primary">Hold on, we are redirecting you the the screen from where you can connect with customer visually</label><a class="btn btn-link" href="#modals-sizes" aria-label="Close">Close</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+</body>
+</html>
