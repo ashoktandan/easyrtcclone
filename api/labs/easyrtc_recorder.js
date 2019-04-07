@@ -254,7 +254,6 @@
   **/
 
   function progress(evt){
-      console.info('99998989')
       if (evt.lengthComputable) {
         var percentComplete = evt.loaded / evt.total;
         percentComplete = parseInt(percentComplete * 100);
@@ -273,7 +272,7 @@
     //Chrome inspector shows that the post data includes a file and a title.                                                                                                                                           
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/blob',
+      url: '/blob',
       data: form,
       xhr: function() {
         var myXhr = $.ajaxSettings.xhr();
