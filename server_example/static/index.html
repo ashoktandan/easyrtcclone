@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
 <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
 <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-    <script type="text/javascript">
-        function forward(){ window.location = "./demos/";}
-    </script>
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+
+    
     <style>
     .center {
   margin: 0;
@@ -53,20 +53,20 @@
                                                             <form class="form-horizontal" action="#forms">
                                                                     <div class="form-group">
                                                                       <div class="col-3">
-                                                                        <label class="form-label" for="input-example-8">Email</label>
+                                                                        <label class="form-label" for="email">Email</label>
                                                                       </div>
                                                                       <div class="col-9">
-                                                                        <input class="form-input" id="input-example-8" type="email" placeholder="Email" value="test@teleperformance.com" pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
+                                                                        <input class="form-input" id="email" type="email" placeholder="Email" value="test@teleperformance.com" pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
                                                                       </div>
                                                                     </div>
                                                                    
                                                                    
                                                                     <div class="form-group">
                                                                       <div class="col-3">
-                                                                        <label class="form-label" for="input-example-12">Password</label>
+                                                                        <label class="form-label" for="pass">Password</label>
                                                                       </div>
                                                                       <div class="col-9">
-                                                                        <input class="form-input" id="input-example-12" type="password" placeholder="Password" value="123456789">
+                                                                        <input class="form-input" id="pass" type="password" placeholder="Password" value="123456789">
                                                                       </div>
                                                                     </div>
                                                                   
@@ -74,7 +74,7 @@
                                                                    
                                                                   </form>
 
-                                                        <button class="btn btn-primary" onclick="location.assign('/demos/demo_customers.html')">Sign in</button>
+                                                        <button class="btn btn-primary" id="loginbtn">Sign in</button>
                                                       </div>
                                                     </div>
                                                 </div>
@@ -87,4 +87,24 @@
 
     <a href="http://www.easyrtc.com/"><img src="easyrtc/img/powered_by_easyrtc.png" width="200" height="60" alt="Powered by EasyRTC"></a>
 </body>
+<script>
+  function forward(){ 
+    window.location = "./demos/";
+  }
+  $(document).ready(function(){
+    $('#loginbtn').click(function(){ 
+      $.post("/login",
+{
+email: $('#email').val(),
+pass: $('#pass').val()
+}, function(data, status){
+if(data.length>0){
+  location.assign('/demos/demo_customers.html')
+}else{
+  alert("Login failes.Please enter correct credentials");
+}
+});
+    })
+  })
+</script>
 </html>

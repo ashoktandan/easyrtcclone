@@ -2,11 +2,14 @@
 var https   = require("https");     // https server core module
 var fs      = require("fs");        // file system core module
 var express = require("express");   // web framework external module
+var bodyParser = require('body-parser')
 var io      = require("socket.io"); // web socket external module
 var fs=require('fs')
 var path=require('path')
 var multer=require('multer')
 var unirest = require("unirest");
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://ashoktandan:alapalap99@ds245687.mlab.com:45687/ashokdb";
 // This sample is using the easyrtc from parent folder.
 // To use this server_example folder only without parent folder:
 // 1. you need to replace this "require("../");" by "require("easyrtc");"
@@ -17,6 +20,10 @@ var easyrtc = require("../"); // EasyRTC internal module
 // Setup and configure Express http server. Expect a subfolder called "static" to be the web root.
 var httpApp = express();
 httpApp.use(express.static(__dirname + "/static/"));
+httpApp.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+httpApp.use(bodyParser.json())
 var reqURL = unirest("GET", "https://www.fast2sms.com/dev/bulk");
 httpApp.post('/sendsms',function(req,res){
     reqURL.query({
@@ -25,7 +32,7 @@ httpApp.post('/sendsms',function(req,res){
         "message": "https://157.230.171.151:8443/demos/demo_audio_video_simple.html",
         "language": "english",
         "route": "p",
-        "numbers": "8802985527",
+        "numbers": req.phone,
       });
       
       reqURL.headers({
@@ -39,7 +46,48 @@ httpApp.post('/sendsms',function(req,res){
       });
       res.end('success')
 });
+httpApp.post('/adduser',function(req,res){
+    console.log('********',req.body)
+    MongoClient.connect(url, function(err, db) {
+        if (err) res.send("fail");
+        var dbo = db.db("ashokdb");
+        dbo.collection("user").insertOne(req.body, function(err, resp) {
+          if (err) throw err;
+          console.log("1 document inserted");
+          db.close();
+          res.end("success")
+        });
+      });
+})
 
+httpApp.get('/getusers',function(req,res){
+    console.log('********',req.body)
+    MongoClient.connect(url, function(err, db) {
+        if (err) res.send("fail");
+        var dbo = db.db("ashokdb");
+        dbo.collection("user").find({'type':'customer'}).toArray(function(err, result) {
+            if (err) throw err;
+            console.log('#####',result);
+            db.close();
+            res.json(result);
+          });
+      });
+})
+
+httpApp.post('/login',function(req,res){
+    console.log('********',req.body)
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("ashokdb");
+        var query = { email: req.body.email,pass:req.body.pass};
+        dbo.collection("user").find(query).toArray(function(err, result) {
+          if (err) throw err;
+          console.log('#####',result);
+          db.close();
+          res.json(result);
+        });
+      });
+})
 
 httpApp.post('/blob',function(req,res){
     var storage = multer.diskStorage({

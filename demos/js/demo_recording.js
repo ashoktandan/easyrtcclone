@@ -11,7 +11,7 @@ function connect() {
       if( easyrtc.isRecordingTypeSupported("vp8")) document.getElementById("useVP8").disabled = false; 
     }
 
-    easyrtc.setVideoDims(640,480);
+    easyrtc.setVideoDims(480,640);
     easyrtc.setRoomOccupantListener(convertListToButtons);
     easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
 

@@ -8,7 +8,57 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
         function forward(){ window.location = "./demos/";}
-        function sendsms(){
+
+$(document).ready(function(){
+
+  $.ajax({
+      "url": "/getusers",
+      "method": "GET",
+    }).done(function (response) {
+  for(var i=0;i<response.length;i++){
+      var row=`<div class="column col-4 filter-item" data-tag="tag-3">
+                                                            <div class="card">
+                                                              <div class="card-header">
+                                                                  <div class="tile">
+                                                                      <div class="tile-icon">
+                                                                        <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
+                                                                      </div>
+                                                                      <div class="tile-content">
+                                                                        <p class="tile-title text-bold">${response[i].name}</p>
+                                                                        <p class="tile-subtitle">${response[i].email}: ${response[i].detail}</p>
+                                                                      </div>
+                                                                    </div>
+    
+                                                                <div class="card-title text-bold"><button class="btn" onclick="sendsms(${response[i].phone})">Send SMS</button></div>
+                                                                <!-- <div class="card-subtitle text-gray">Shooter</div> -->
+                                                              </div>
+                                                            </div>
+                                                          </div>`
+                                                          $('.users').append(row);   
+  }
+    });
+  
+
+  $('#saveuser').click(function(){
+    $.ajax({
+      "url": "/adduser",
+      "method": "POST",
+      "data": {
+    "name":$('#name').val(),
+    "detail":$('#details').val(),
+    "phone":$('#phone').val(),
+    "email":$('#email').val(),
+    "type":"customer"
+  }
+    }).done(function (response) {
+  alert('user saved successfully')
+  location.assign('/demos/demo_customers.html#modals-sizes')
+  location.reload()
+    });
+  })
+})
+
+        function sendsms(phone){
          
           var settings = {
   "async": true,
@@ -19,11 +69,7 @@
     "authorization": "KiQ3ZX2IkyY18w0N4WufFp6rBzqhTmvED9GxRsHebMV5nolAJLMidkyIf94tjsZ7bB6wzXrGTQClgU3D",
   },
   "data": {
-    "sender_id": "FSTSMS",
-    "message": "This is a test message",
-    "language": "english",
-    "route": "p",
-    "numbers": "8802985527",
+    "phone":phone
   }
 }
 
@@ -68,6 +114,62 @@ $.ajax(settings).done(function (response) {
                           <div class="hero-body">
                                 <div class="container">
 
+
+
+                                  <div class="column"><a class="btn btn-primary" href="#example-modal-3">Add User</a>
+                                    <div class="modal modal-lg" id="example-modal-3"><a class="modal-overlay" href="#modals-sizes" aria-label="Close"></a>
+                                      <div class="modal-container" role="document">
+                                        <div class="modal-header"><a class="btn btn-clear float-right" href="#modals-sizes" aria-label="Close"></a>
+                                          <div class="modal-title h5">Add new user by filling below details.</div>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div class="content">
+                                            <div class="form-group">
+                                              <div class="col-3 col-sm-12">
+                                                <label class="form-label" for="input-example-4">Name</label>
+                                              </div>
+                                              <div class="col-9 col-sm-12">
+                                                <input class="form-input" id="name" type="text" placeholder="Name">
+                                              </div>
+                                            </div>
+                                           
+                                            <div class="form-group">
+                                              <div class="col-3 col-sm-12">
+                                                <label class="form-label" for="input-example-4">Email</label>
+                                              </div>
+                                              <div class="col-9 col-sm-12">
+                                                <input class="form-input" id="email" type="email" placeholder="Email">
+                                              </div>
+                                            </div>
+                                            <div class="form-group">
+                                              <div class="col-3 col-sm-12">
+                                                <label class="form-label" for="input-example-4">Phone</label>
+                                              </div>
+                                              <div class="col-9 col-sm-12">
+                                                <input class="form-input" id="phone" type="tel" placeholder="Phone">
+                                              </div>
+                                            </div>
+                                            <div class="form-group">
+                                              <div class="col-3 col-sm-12">
+                                                <label class="form-label" for="input-example-4">Customer Details</label>
+                                              </div>
+                                              <div class="col-9 col-sm-12">
+                                                <textarea class="form-input" id="details" placeholder="something about customer" rows="3"></textarea>
+                                              </div>
+                                            </div>
+                                          </div> 
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button class="btn btn-primary" id="saveuser">Save</button><a class="btn btn-link" id="closeme" href="#modals-sizes">Cancel</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+
+
+
                                         <div class="docs-demo columns">
                                                 <div class="column col-12">
                                                   <div class="filter">
@@ -79,79 +181,9 @@ $.ajax(settings).done(function (response) {
                                                     <div class="filter-nav">
                                                       <label class="" for="tag-0"><h3>Please send SMS to customer whomever you want to connect with visually.</h3></label>
                                                     </div>
-                                                    <div class="filter-body columns">
-                                                        <div class="column col-4 filter-item" data-tag="tag-3">
-                                                            <div class="card">
-                                                              <div class="card-header">
-                                                                  <div class="tile">
-                                                                      <div class="tile-icon">
-                                                                        <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
-                                                                      </div>
-                                                                      <div class="tile-content">
-                                                                        <p class="tile-title text-bold">Customer 1</p>
-                                                                        <p class="tile-subtitle">This is Customers detail.Click send sms to furthur process.That were too big for any one hero to tackle...</p>
-                                                                      </div>
-                                                                    </div>
-    
-                                                                <div class="card-title text-bold"><button class="btn" onclick="sendsms()">Send SMS</button></div>
-                                                                <!-- <div class="card-subtitle text-gray">Shooter</div> -->
-                                                              </div>
-                                                            </div>
-                                                          </div>
-                                                      <div class="column col-4 filter-item" data-tag="tag-3">
-                                                        <div class="card">
-                                                          <div class="card-header">
-                                                              <div class="tile">
-                                                                  <div class="tile-icon">
-                                                                    <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
-                                                                  </div>
-                                                                  <div class="tile-content">
-                                                                    <p class="tile-title text-bold">Thor Odinson</p>
-                                                                    <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
-                                                                  </div>
-                                                                </div>
-
-                                                                <div class="card-title text-bold"><button class="btn">Send SMS</button></div>
-                                                            <!-- <div class="card-subtitle text-gray">Shooter</div> -->
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                      <div class="column col-4 filter-item" data-tag="tag-3">
-                                                          <div class="card">
-                                                            <div class="card-header">
-                                                                <div class="tile">
-                                                                    <div class="tile-icon">
-                                                                      <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
-                                                                    </div>
-                                                                    <div class="tile-content">
-                                                                      <p class="tile-title text-bold">Thor Odinson</p>
-                                                                      <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
-                                                                    </div>
-                                                                  </div>
-  
-                                                                <div class="card-title text-bold"><button class="btn">Send SMS</button></div>
-                                                              <!-- <div class="card-subtitle text-gray">Shooter</div> -->
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                        <div class="column col-4 filter-item" data-tag="tag-3">
-                                                            <div class="card">
-                                                              <div class="card-header">
-                                                                  <div class="tile">
-                                                                      <div class="tile-icon">
-                                                                        <figure class="avatar"><img src="https://picturepan2.github.io/spectre/img/avatar-1.png" alt="Avatar XL"></figure>
-                                                                      </div>
-                                                                      <div class="tile-content">
-                                                                        <p class="tile-title text-bold">Thor Odinson</p>
-                                                                        <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
-                                                                      </div>
-                                                                    </div>
-    
-                                                                <div class="card-title text-bold"><button class="btn">Send SMS</button></div>
-                                                                <!-- <div class="card-subtitle text-gray">Shooter</div> -->
-                                                              </div>
-                                                            </div>
-                                                          </div>
+                                                    <div class="filter-body columns users">
+                                                       
+                                                     
                                                      
                                                       
                                                       

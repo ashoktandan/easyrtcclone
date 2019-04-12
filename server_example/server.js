@@ -25,7 +25,7 @@ app.post('/sendsms',function(req,res){
     reqURL.query({
         "authorization": "KiQ3ZX2IkyY18w0N4WufFp6rBzqhTmvED9GxRsHebMV5nolAJLMidkyIf94tjsZ7bB6wzXrGTQClgU3D",
         "sender_id": "FSTSMS",
-        "message": "http://157.230.171.151/demos/demo_audio_video_simple.html",
+        "message": "http://157.230.171.151:8080/demos/demo_audio_video_simple.html",
         "language": "english",
         "route": "p",
         "numbers": "8802985527",

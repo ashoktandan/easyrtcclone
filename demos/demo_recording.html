@@ -113,6 +113,11 @@
                                                                         <input type="radio" onclick="easyrtc.setRecordingVideoCodec('h264');" id="useH264" name="codecUsed" disabled="disabled"> H264
                                                                     </label>
                                                                     <br>
+                                                                    <div id="upload" class="hide">
+                                                                        <label class="label label-danger">Uploading Video</label>
+                                                                            <meter class="meter" value="0" min="0" max="100"></meter>
+                                                                    </div>
+                                                                    <br>
                                                                     <button id="startRecording" disabled="disabled" onclick="startRecording();" >Start recording</button> 
                                                                     <button id="stopRecording" disabled="disabled" onclick="endRecording();" >End & Upload recording</button> 
                                                                    <br>
